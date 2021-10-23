@@ -3,12 +3,15 @@ import ReactDOM from 'react-dom';
 import './assets/scss/index.scss';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const myText = 'hello React!';
 
 ReactDOM.render(
     <React.StrictMode>
-        <App content={myText}/>
+        <div className="container py-3">
+            <App content={myText}/>
+        </div>
     </React.StrictMode>,
     document.getElementById('root')
 );
