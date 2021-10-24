@@ -1,0 +1,11 @@
+.messageWrapper {
+  display: flex;
+  border: 1px solid grey;
+  border-radius: 5px;
+  padding: 20px;
+  margin: 10px;
+  & > .messageBody {
+    font-size: 30px;
+    color: #4444d2;
+  }
+}
