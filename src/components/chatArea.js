@@ -2,9 +2,15 @@ import React from 'react';
 
 export class ChatArea extends React.Component {
 
+
+    componentDidMount() {
+        // Вопрос это правильнее сделать через ref?
+        this.componentWrapper = document.getElementById("chat-area")
+    }
+
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (prevProps.list.length !== this.props.list.length) {
-            document.getElementById("chat-area").scrollTop += 200
+            this.componentWrapper.scrollTop = this.componentWrapper.scrollHeight
         }
     }
 
