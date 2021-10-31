@@ -15,7 +15,7 @@ const SendMessage = ({addMessage}) => {
 
     useEffect(() => {
         inputElementRef.current.querySelector('input').focus()
-    }, [])
+    })
 
     const sendMessage = () => {
         const inputElement = inputElementRef.current.querySelector('input')
