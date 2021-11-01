@@ -18,7 +18,7 @@ export default [
     },
     {
         id: uniqid(),
-        link:   `/chats/${rooms[0].title.toString().toLowerCase().replace(' ','_')}`,
+        link:   `/chats/${slagFirtsRoom}`,
         path: '/chats/:chatName',
         title: 'Chats',
         exact: false,
