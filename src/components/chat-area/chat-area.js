@@ -1,5 +1,5 @@
 import React, {useState, useRef, useEffect} from 'react';
-import {Box, Button, Stack, Paper} from '@mui/material';
+import {Box, Button, Stack, Paper, Typography} from '@mui/material';
 import {styled} from '@mui/material/styles';
 
 const Item = styled(Paper)(({theme}) => ({
@@ -9,7 +9,7 @@ const Item = styled(Paper)(({theme}) => ({
     color: theme.palette.text.secondary,
 }));
 
-const ChatArea = ({listMessages}) => {
+const ChatArea = ({listMessages, room}) => {
     const chatAreaRef = useRef(null)
     useEffect(
         () => {
@@ -31,6 +31,16 @@ const ChatArea = ({listMessages}) => {
                  height: '70vh',
                  overflow: 'auto'
              }}>
+            <Typography
+                component='h2'
+            >
+                <strong>Room:</strong>
+                <span style={{
+                    marginLeft: '10px'
+                }}>
+                    {room.title}
+                </span>
+            </Typography>
             <Stack spacing={2}>
                 {
                     listMessages.map(({id, message}) => {

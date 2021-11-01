@@ -7,41 +7,16 @@ import {
     Modal,
     TextField,
     ListSubheader,
+    Link,
     List,
     ListItemButton,
     ListItemIcon,
     ListItemText
 } from '@mui/material';
+import {NavLink} from "react-router-dom";
 
-import AllInboxIcon from '@mui/icons-material/AllInbox';
-import SportsHandballIcon from '@mui/icons-material/SportsHandball';
-import FiberNewIcon from '@mui/icons-material/FiberNew';
-import ConnectWithoutContactIcon from '@mui/icons-material/ConnectWithoutContact';
 
-const rooms = [
-    {
-        id: uniqid(),
-        title: 'Main Room',
-        icon: <AllInboxIcon></AllInboxIcon>,
-    },
-    {
-        id: uniqid(),
-        title: 'Sport',
-        icon: <SportsHandballIcon></SportsHandballIcon>,
-    },
-    {
-        id: uniqid(),
-        title: 'News',
-        icon: <FiberNewIcon></FiberNewIcon>
-    },
-    {
-        id: uniqid(),
-        title: 'Relations',
-        icon: <ConnectWithoutContactIcon></ConnectWithoutContactIcon>
-    },
-]
-
-const ListChats = () => {
+const ListChats = ({rooms}) => {
     return (
         <Box
             sx={{
@@ -77,16 +52,34 @@ const ListChats = () => {
                 {
                     rooms.map(item => {
                         return (
-                            <ListItemButton key={item.id}>
-                                <ListItemIcon>
-                                    {item.icon}
-                                </ListItemIcon>
-                                <ListItemText
-                                    primary={item.title}
+                            <ListItemButton
+                                component={NavLink}
+                                to={`/chats/${item.title.toString().toLowerCase().replace(' ', '_')}`}
+                                key={item.id}
+                                activeClassName='active'
+                                sx={{
+                                    borderBottom: '3px solid transparent',
+                                    '&.active': {
+                                        backgroundColor: 'primary.dark',
+                                        borderBottom: '3px solid white'
+                                    }
+                                }}
+                            >
+                                <ListItemIcon
                                     sx={{
                                         color: 'primary.contrastText',
                                     }}
-                                />
+                                >
+                                    {item.icon}
+                                </ListItemIcon>
+                                <Typography
+                                    sx={{
+                                        color: 'primary.contrastText',
+                                    }}
+                                >
+                                    {item.title}
+                                </Typography>
+
                             </ListItemButton>
                         )
                     })
