@@ -1,11 +1,10 @@
 import ChatsPage from '../views/chats-page'
 import HomePage from '../views/home-page'
 import uniqid from 'uniqid'
-import rooms from '../store/rooms'
 import Error404 from '../components/error404'
 import PersonArea from '../views/person-area-page'
 
-const slagFirtsRoom = rooms[0].title.toString().toLowerCase().replace(' ','_')
+//const slagFirtsRoom = rooms[0].title.toString().toLowerCase().replace(' ', '_')
 
 export default [
     {
@@ -14,15 +13,15 @@ export default [
         path: '/',
         title: 'Home',
         exact: true,
-        component: <HomePage></HomePage>
+        component: HomePage
     },
     {
         id: uniqid(),
-        link:   `/chats/${slagFirtsRoom}`,
-        path: '/chats/:chatName',
+        link: `/chats`,
+        path: '/chats',
         title: 'Chats',
         exact: false,
-        component: <ChatsPage></ChatsPage>
+        component: ChatsPage
     },
     {
         id: uniqid(),
@@ -30,15 +29,15 @@ export default [
         path: '/person-area',
         title: 'Person-area',
         exact: true,
-        component: <PersonArea></PersonArea>
+        component: PersonArea
     },
     {
         id: uniqid(),
-        link:   `/**`,
+        link: `/**`,
         path: '/**',
         title: 'error',
         exact: false,
-        component: <Error404></Error404>
+        component: Error404
     },
 ]
 

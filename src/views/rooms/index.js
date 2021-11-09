@@ -4,27 +4,25 @@ import SportsHandballIcon from '@mui/icons-material/SportsHandball';
 import FiberNewIcon from '@mui/icons-material/FiberNew';
 import ConnectWithoutContactIcon from '@mui/icons-material/ConnectWithoutContact';
 
-const rooms = [
+export default [
     {
         id: uniqid(),
         title: 'Main Room',
-        icon: <AllInboxIcon></AllInboxIcon>,
+        icon: AllInboxIcon,
     },
     {
         id: uniqid(),
         title: 'Sport',
-        icon: <SportsHandballIcon></SportsHandballIcon>,
+        icon: SportsHandballIcon,
     },
     {
         id: uniqid(),
         title: 'News',
-        icon: <FiberNewIcon></FiberNewIcon>
+        icon: FiberNewIcon
     },
     {
         id: uniqid(),
         title: 'Relations',
-        icon: <ConnectWithoutContactIcon></ConnectWithoutContactIcon>
+        icon: ConnectWithoutContactIcon
     },
 ]
-
-export default rooms

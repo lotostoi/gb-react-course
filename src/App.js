@@ -1,5 +1,9 @@
-import {Container} from '@mui/material'
+import { Container } from '@mui/material'
 import AppHeader from './components/header'
+import { Provider } from "react-redux";
+import store from './store'
+
+
 import {
     BrowserRouter as Router,
     Switch,
@@ -9,19 +13,19 @@ import routes from './router'
 
 function App() {
     return (
-        <Container>
-            <Router>
-                <AppHeader></AppHeader>
-                <Switch>
-                    {
-                        routes.map(({id, path, component, exact}) =>
-                            <Route key={id} path={path} exact={exact}>
-                                {component}
-                            </Route>)
-                    }
-                </Switch>
-            </Router>
-        </Container>
+        <Provider store={store}>
+            <Container>
+                <Router>
+                    <AppHeader></AppHeader>
+                    <Switch>
+                        {
+                            routes.map(({ id, path, component, exact }) =>
+                                <Route key={id} path={path} exact={exact} component={component}></Route>)
+                        }
+                    </Switch>
+                </Router>
+            </Container>
+        </Provider>
     );
 }
 
