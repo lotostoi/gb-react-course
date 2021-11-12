@@ -6,7 +6,7 @@ import { SHOW_NAME, HIDE_NAME } from '../store/person-area/actions'
 
 export default function () {
 
-    const { showName } = useSelector((state) => state)
+    const { showName } = useSelector((state) => state.showName)
 
     const dispatch = useDispatch();
 

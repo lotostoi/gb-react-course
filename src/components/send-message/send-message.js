@@ -1,15 +1,16 @@
-import {useRef, useEffect} from 'react'
+import { useRef, useEffect } from 'react'
 import uniqid from 'uniqid'
+import { useDispatch } from 'react-redux';
+
+import { addMessage } from '../../store/messages/actions'
 
 import {
     Box,
     Button,
-    Typography,
-    Modal,
     TextField
 } from '@mui/material';
 
-const SendMessage = ({addMessage}) => {
+const SendMessage = ({ idChat }) => {
     const inputElementRef = useRef(null)
     const formRef = useRef(null)
 
@@ -17,14 +18,20 @@ const SendMessage = ({addMessage}) => {
         inputElementRef.current.querySelector('input').focus()
     })
 
-    const sendMessage = () => {
+    const dispatch = useDispatch()
+
+    const sendMessage = (e) => {
+        e.preventDefault()
         const inputElement = inputElementRef.current.querySelector('input')
-        addMessage(
-            {
+
+        dispatch(addMessage({
+            idChat,
+            message: {
                 id: uniqid(),
                 message: inputElement.value
             }
-        )
+        }))
+
         formRef.current.reset()
     }
 
@@ -43,13 +50,13 @@ const SendMessage = ({addMessage}) => {
             }}
         >
             <TextField id="message"
-                       label="Your message"
-                       variant="outlined"
-                       type="text"
-                       ref={inputElementRef}
-                       sx={{
-                           width: '80%'
-                       }}
+                label="Your message"
+                variant="outlined"
+                type="text"
+                ref={inputElementRef}
+                sx={{
+                    width: '80%'
+                }}
             />
             <Button
                 variant="contained"
@@ -57,7 +64,7 @@ const SendMessage = ({addMessage}) => {
                     width: '210px',
                     color: 'primary.contrastText',
                     backgroundColor: 'primary.light',
-                    margin: '0 auto',
+                    margin: '0 10px 0 5px',
                 }}
                 onClick={sendMessage}
             >

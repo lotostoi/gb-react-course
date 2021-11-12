@@ -1,7 +1,6 @@
 import {
     Typography,
     ListItemButton,
-    ListItemIcon,
 } from '@mui/material';
 import { NavLink } from "react-router-dom";
 
@@ -11,9 +10,9 @@ const CustomLink = ({ item }) => {
     
        <ListItemButton
             component={NavLink}
-            to={`/chats/${item.title.toString().toLowerCase().replace(' ', '_')}`}
+            to={`/chats/${item.name.toString().toLowerCase().replace(' ', '_')}`}
             key={item.id}
-            activeClassName='active'
+            activeClassName='active' 
             sx={{
                 borderBottom: '3px solid transparent',
                 '&.active': {
@@ -22,19 +21,13 @@ const CustomLink = ({ item }) => {
                 }
             }}
         >
-            <ListItemIcon
-                sx={{
-                    color: 'primary.contrastText',
-                }}
-            >
-                <item.icon />
-            </ListItemIcon>
+
             <Typography
                 sx={{
                     color: 'primary.contrastText',
                 }}
             >
-                {item.title}
+                {item.name}
             </Typography>
 
         </ListItemButton>

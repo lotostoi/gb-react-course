@@ -1,11 +1,17 @@
 import React, { useRef, useEffect } from 'react';
 import { Box, Stack, Paper, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import { useParams } from 'react-router-dom'
+import { useParams, useHistory } from 'react-router-dom'
+import { useSelector, useDispatch, shallowEqual } from 'react-redux'
 
-import rooms from '../../views/rooms'
+import { deleteChat } from '../../store/chats/actions'
+
+import { getMessages } from '../../store/messages/selectors';
+import { getChats } from '../../store/chats/selectors';
 
 import P404 from '../error404'
+
+import SendMessage from '../send-message';
 
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -16,67 +22,89 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 
-
 const ChatArea = () => {
 
-    const chatAreaRef = useRef(null)
-    // возможно еще пригодится
-    useEffect(
-        () => {
-            chatAreaRef.current.scrollTop = chatAreaRef.current.scrollHeight
-        }
-        , []
-    )
+    const chats = useSelector(getChats, shallowEqual)
 
     const { chatName } = useParams()
 
-    const room = rooms.find(({ title }) => title.toString().toLowerCase().replace(' ', '_') === chatName)
+    const room = chats.find(({ name }) => name.toString().toLowerCase().replace(' ', '_') === chatName)
 
     return (
-        <Box component="div"
-            ref={chatAreaRef}
-            sx={{
-                p: 2,
-                display: 'flex',
-                flexDirection: 'column',
-                borderRadius: '5px',
-                border: '1px solid blue',
-                borderColor: 'primary.light',
-                width: 'calc(100% - 320px)',
-                height: '70vh',
-                overflow: 'auto'
-            }}>
+        <div style={{ width: 'calc(100% - 262px)', }}>
+            <Box component="div"
+                sx={{
+                    p: 2,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    borderRadius: '5px',
+                    border: '1px solid blue',
+                    borderColor: 'primary.light',
+                    width: '100%',
+                    height: '85vh',
+                    overflow: 'auto',
+                    boxSizing: 'border-box'
+                }}>
 
-            {
-                room ? <ChatRoom name={room.title} /> : <P404 />
-            }
-
-        </Box>
+                {
+                    room ? <ChatRoom name={room.name} id={room.id} /> : <P404 />
+                }
+            </Box>
+        </div >
     )
 }
 
 
-function ChatRoom({ name }) {
+function ChatRoom({ name, id }) {
+    const dispatch = useDispatch()
+    const history = useHistory()
+
+    const {messages} = useSelector(getMessages, shallowEqual)
+
+    // возможно еще пригодится
+    const chatAreaRef = useRef(null)
+    useEffect(
+        () => {
+            chatAreaRef.current.scrollTop = chatAreaRef.current.scrollHeight
+        }
+    )
     return (
         <>
-            <Typography
-                component='h2'
-            >
-                <strong>Room:</strong>
-                <span style={{
-                    marginLeft: '10px'
-                }}>
-                    {name}
-                </span>
-            </Typography>
-            <Stack spacing={2}>
-                {
-                    <Item >
-                        <strong> User: </strong> some message ...
-                    </Item>
-                }
-            </Stack>
+            <div style={{
+                display: 'flex',
+                margin: '0 0 10px 0'
+            }}>
+                <p>
+                    <strong>Room:</strong>
+                    <span style={{
+                        marginLeft: '10px'
+                    }}>
+                        {name}
+                    </span>
+                </p>
+                <button style={{ margin: '0 0 0 auto' }} onClick={() => {
+                    dispatch(deleteChat({ id }))
+                    history.push("/chats");
+                }}> Delete chat</button>
+            </div>
 
+            <div
+                ref={chatAreaRef}
+                style={{
+                    height: '80vh',
+                    overflow: 'auto'
+                }}>
+                {`${id}` in messages && messages[id].map(({ id, message }) => {
+                    return <Stack spacing={2} key={id} style={{ margin: '5px 0 0 0' }}>
+                        {
+                            <Item >
+                                <strong> User: </strong> {message}
+                            </Item>
+                        }
+                    </Stack>
+                })}
+            </div>
+            <SendMessage idChat={id}></SendMessage>
         </>
     )
 }

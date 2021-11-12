@@ -4,13 +4,30 @@ import {
     ListSubheader,
     List,
 } from '@mui/material';
-import { Switch } from "react-router-dom";
+import { useRef } from 'react'
+import { useSelector, useDispatch, shallowEqual } from 'react-redux'
+
+import { addChat } from '../../store/chats/actions'
+import uniqid from 'uniqid'
 
 import CustomLink from './custom-link';
+import { getChats } from '../../store/chats/selectors';
 
-import rooms from '../../views/rooms'
 
 const ListChats = () => {
+
+    const chats = useSelector(getChats, shallowEqual)
+
+    const dispatch = useDispatch()
+
+    const inputChatName = useRef(null)
+
+    const _addChat = () => {
+        const name = inputChatName.current.value
+        if (!name || chats.find((chat) => chat.name === name)) return
+        dispatch(addChat({ id: uniqid(), name }))
+    }
+
     return (
         <Box
             sx={{
@@ -20,6 +37,7 @@ const ListChats = () => {
                 maxWidth: '250px',
                 bgcolor: 'primary.light',
                 borderRadius: '5px',
+                height: '85vh',
             }}
         >
             <List
@@ -44,9 +62,11 @@ const ListChats = () => {
                 }
             >
                 {
-                    rooms.map(item => <CustomLink item={item} key={item.id} />)
+                    chats.map(item => <CustomLink item={item} key={item.id} />)
                 }
             </List>
+            <input type="text" placeholder="add chat" style={{ margin: 'auto 5px 5px', height: '40px', borderRadius: '5px', outline: 'none', padding: '5px' }} ref={inputChatName} />
+            <button style={{ margin: '5px' }} onClick={_addChat} style={{ margin: '5px', height: '40px', borderRadius: '5px', outline: 'none', padding: '5px' }}> add</button>
         </Box>
     )
 }
