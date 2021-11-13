@@ -8,12 +8,12 @@ export default function (state = initialState, { type, payload }) {
     switch (type) {
         case ADD_CHAT: {
             return {
-                chats: [...state.chats, payload],
+                chats: [...[...state.chats], payload],
             }
         }
         case DELETE_CHAT: {
             const newChats = [...state.chats].filter(({ id }) => id !== payload.id)
-            return { ...state, chats: newChats }
+            return { chats: newChats }
         }
         default: {
             return state

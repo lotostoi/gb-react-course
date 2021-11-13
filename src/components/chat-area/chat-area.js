@@ -8,6 +8,7 @@ import { deleteChat } from '../../store/chats/actions'
 
 import { getMessages } from '../../store/messages/selectors';
 import { getChats } from '../../store/chats/selectors';
+import { deleteMessages } from '../../store/messages/actions';
 
 import P404 from '../error404'
 
@@ -26,8 +27,9 @@ const ChatArea = () => {
 
     const chats = useSelector(getChats, shallowEqual)
 
-    const { chatName } = useParams()
+    let { chatName } = useParams()
 
+ 
     const room = chats.find(({ name }) => name.toString().toLowerCase().replace(' ', '_') === chatName)
 
     return (
@@ -59,7 +61,7 @@ function ChatRoom({ name, id }) {
     const dispatch = useDispatch()
     const history = useHistory()
 
-    const {messages} = useSelector(getMessages, shallowEqual)
+    const { messages } = useSelector(getMessages, shallowEqual)
 
     // возможно еще пригодится
     const chatAreaRef = useRef(null)
@@ -84,6 +86,7 @@ function ChatRoom({ name, id }) {
                 </p>
                 <button style={{ margin: '0 0 0 auto' }} onClick={() => {
                     dispatch(deleteChat({ id }))
+                    dispatch(deleteMessages({ id }))
                     history.push("/chats");
                 }}> Delete chat</button>
             </div>

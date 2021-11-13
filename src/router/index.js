@@ -4,8 +4,6 @@ import uniqid from 'uniqid'
 import Error404 from '../components/error404'
 import PersonArea from '../views/person-area-page'
 
-//const slagFirtsRoom = rooms[0].title.toString().toLowerCase().replace(' ', '_')
-
 export default [
     {
         id: uniqid(),
