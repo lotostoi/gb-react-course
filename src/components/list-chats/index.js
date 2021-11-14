@@ -1,3 +1,3 @@
-import listChats from './list-chats'
+import listChats from './list-chats-container'
 
 export default listChats

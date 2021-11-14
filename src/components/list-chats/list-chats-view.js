@@ -1,41 +1,20 @@
-import React from 'react'
+
 import {
-    Box,
     ListSubheader,
     List,
 } from '@mui/material';
-import { useRef } from 'react'
-import { useSelector, useDispatch, shallowEqual } from 'react-redux'
-
-import { addChat } from '../../store/chats/actions'
-import uniqid from 'uniqid'
 
 import CustomLink from './custom-link';
-import { getChats } from '../../store/chats/selectors';
 
-
-const ListChats = () => {
-
-    const chats = useSelector(getChats, shallowEqual)
-
-    const dispatch = useDispatch()
-
-    const inputChatName = useRef(null)
-
-    const _addChat = () => {
-        const name = inputChatName.current.value
-        if (!name || chats.find((chat) => chat.name === name)) return
-        dispatch(addChat({ id: uniqid(), name }))
-    }
-
+export default function ({_addChat, chats, inputChatName}) {
     return (
-        <Box
-            sx={{
+        <div
+            style={{
                 display: 'flex',
                 flexDirection: 'column',
                 width: '100%',
                 maxWidth: '250px',
-                bgcolor: 'primary.light',
+                backgroundColor: '#42a5f5',
                 borderRadius: '5px',
                 height: '85vh',
             }}
@@ -57,7 +36,7 @@ const ListChats = () => {
                             borderRadius: '5px',
                         }}
                     >
-                        Rooms
+                        Rooms:
                     </ListSubheader>
                 }
             >
@@ -65,10 +44,8 @@ const ListChats = () => {
                     chats.map(item => <CustomLink item={item} key={item.id} />)
                 }
             </List>
-            <input type="text" placeholder="add chat" style={{ margin: 'auto 5px 5px', height: '40px', borderRadius: '5px', outline: 'none', padding: '5px' }} ref={inputChatName} />
-            <button style={{ margin: '5px' }} onClick={_addChat} style={{ margin: '5px', height: '40px', borderRadius: '5px', outline: 'none', padding: '5px' }}> add</button>
-        </Box>
+            <input type="text" placeholder="add chat" className="form-control mx-3 w-75 mt-auto" ref={inputChatName} />
+            <button onClick={_addChat} className="btn btn-warning w-75 m-3"> add</button>
+        </div>
     )
 }
-
-export default ListChats;
