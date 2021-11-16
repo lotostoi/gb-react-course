@@ -3,6 +3,7 @@ import HomePage from '../views/home-page'
 import uniqid from 'uniqid'
 import Error404 from '../components/error404'
 import PersonArea from '../views/person-area-page'
+import WorkWithApi from '../views/work-with-api'
 
 export default [
     {
@@ -28,6 +29,14 @@ export default [
         title: 'Person-area',
         exact: true,
         component: PersonArea
+    },
+    {
+        id: uniqid(),
+        link: '/work-with-api',
+        path: '/work-with-api',
+        title: 'Work with API',
+        exact: true,
+        component: WorkWithApi
     },
     {
         id: uniqid(),

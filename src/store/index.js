@@ -6,13 +6,15 @@ import storage from 'redux-persist/lib/storage';
 import showName from './person-area/reducer';
 import chats from './chats/reducer';
 import messages from './messages/reducer';
+import workWithApi from './work-with-api/reducer'
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const rootReducer = combineReducers({
     showName,
     chats,
-    messages
+    messages,
+    workWithApi
 })
 
 const persistConfig = {
